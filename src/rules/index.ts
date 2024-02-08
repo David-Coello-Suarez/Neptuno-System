@@ -1,3 +1,4 @@
 import storeRoute from './routeStore'
+import { reduxStore } from './reduxStore'
 
-export { storeRoute }
+export { storeRoute, reduxStore }

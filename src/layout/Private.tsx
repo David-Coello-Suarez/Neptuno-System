@@ -6,9 +6,12 @@ const Private = () => {
       <Navbar />
       <Sidebar />
       <div className="content-wrapper">
-        <div className="content">
+        <section className="content-header">
+          <h1>Roles</h1>
+        </section>
+        <section className="content">
           <h1>Hello World!</h1>
-        </div>
+        </section>
       </div>
       <Footer />
     </div>

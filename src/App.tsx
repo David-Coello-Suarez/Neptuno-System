@@ -1,13 +1,11 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { RouterProvider } from 'react-router-dom'
-import { storeRoute } from './rules'
-
-const queryClient = new QueryClient()
+import { reduxStore, storeRoute } from './rules'
+import { Provider } from 'react-redux'
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
+  <Provider store={reduxStore}>
     <RouterProvider router={storeRoute} />
-  </QueryClientProvider>
+  </Provider>
 )
 
 export default App
