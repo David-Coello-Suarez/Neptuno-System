@@ -1,3 +1,4 @@
+import { Outlet } from 'react-router-dom'
 import { Footer, Navbar, Sidebar } from '../utils'
 
 const Private = () => {
@@ -10,7 +11,7 @@ const Private = () => {
           <h1>Roles</h1>
         </section>
         <section className="content">
-          <h1>Hello World!</h1>
+          <Outlet />
         </section>
       </div>
       <Footer />
