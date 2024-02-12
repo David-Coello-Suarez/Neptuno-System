@@ -1,23 +1,23 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik'
 import { Modal, ModalHeader, ModalTitle, ModalBody, ModalFooter } from 'react-bootstrap'
-import { usePostRolusuMutation } from '../../../resources/rolusu'
+import { usePutRolusuMutation } from '../../../resources/rolusu'
 import { useRolsus } from '../../../hooks'
 import { irolusu } from '../../../interfaces'
 import { toast } from 'react-toastify'
 import { RolusuValidation } from '../../../validation'
 
-const ModalCreated = () => {
-  const { rolusuState, modalCreated } = useRolsus()
+const ModalUpdated = () => {
+  const { rolusuState, modalUpdated } = useRolsus()
 
-  const [created, { isLoading }] = usePostRolusuMutation()
+  const [updated, { isLoading }] = usePutRolusuMutation()
 
   const createdRol = async (data: irolusu, options: FormikHelpers<irolusu>) => {
-    const response = await created(data).unwrap()
-
+    const response = await updated(data).unwrap()
+    console.log(data)
     if (response.estado === 1) {
       toast.success(response.mensaje)
       options.resetForm()
-      modalCreated()
+      modalUpdated()
     } else {
       toast.warn(response.mensaje)
     }
@@ -27,8 +27,8 @@ const ModalCreated = () => {
     <Modal
       bsSize="sm"
       backdrop="static"
-      onHide={modalCreated}
-      show={rolusuState.modalCreated}>
+      onHide={modalUpdated}
+      show={rolusuState.modalUpdated}>
       <Formik
         onSubmit={createdRol}
         initialValues={rolusuState.rolusu}
@@ -66,12 +66,12 @@ const ModalCreated = () => {
             <button
               type="reset"
               disabled={isLoading}
-              onClick={modalCreated}
+              onClick={modalUpdated}
               className="btn btn-default pull-left">
               Cerrar
             </button>
             <button type="submit" disabled={isLoading} className="btn btn-primary">
-              {isLoading ? <i className="fa fa-spin fa-spiner" /> : 'Crear'}
+              {isLoading ? <i className="fa fa-spin fa-spinner" /> : 'Actualizar'}
             </button>
           </ModalFooter>
         </Form>
@@ -80,4 +80,4 @@ const ModalCreated = () => {
   )
 }
 
-export default ModalCreated
+export default ModalUpdated

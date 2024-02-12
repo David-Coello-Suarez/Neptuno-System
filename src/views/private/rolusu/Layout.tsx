@@ -1,9 +1,10 @@
-import { BoxBody, BoxHeader, ModalCreated } from '.'
+import { BoxBody, BoxHeader, ModalCreated, ModalUpdated } from '.'
 
 const Layout = () => {
   return (
     <>
       <ModalCreated />
+      <ModalUpdated />
 
       <div className="row">
         <div className="col-xs-12">

@@ -28,7 +28,39 @@ export const Rolusu = createApi({
       transformResponse: (response: irespuesta) => response,
       invalidatesTags: [{ type: 'Rolusu', id: 'LIST' }],
     }),
+    putRolusu: build.mutation<irespuesta, irolusu>({
+      query: ({ rolusu_rolusu, ...body }) => ({
+        url: `/${route}/${rolusu_rolusu}`,
+        method: 'PUT',
+        body,
+      }),
+      transformResponse: (response: irespuesta) => response,
+      invalidatesTags: [{ type: 'Rolusu', id: 'LIST' }],
+    }),
+    deleteRolusu: build.mutation<irespuesta, irolusu>({
+      query: ({ rolusu_rolusu }) => ({
+        url: `/${route}/${rolusu_rolusu}`,
+        method: 'DELETE',
+      }),
+      transformResponse: (response: irespuesta) => response,
+      invalidatesTags: [{ type: 'Rolusu', id: 'LIST' }],
+    }),
+    patchRolusu: build.mutation<irespuesta, irolusu>({
+      query: ({ rolusu_rolusu, ...body }) => ({
+        url: `/${route}/${rolusu_rolusu}`,
+        method: 'PATCH',
+        body,
+      }),
+      transformResponse: (response: irespuesta) => response,
+      invalidatesTags: [{ type: 'Rolusu', id: 'LIST' }],
+    }),
   }),
 })
 
-export const { usePostRolusuMutation, useGetRoulusuQuery } = Rolusu
+export const {
+  useDeleteRolusuMutation,
+  usePatchRolusuMutation,
+  usePutRolusuMutation,
+  usePostRolusuMutation,
+  useGetRoulusuQuery,
+} = Rolusu

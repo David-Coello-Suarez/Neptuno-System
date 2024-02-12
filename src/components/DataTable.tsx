@@ -1,9 +1,11 @@
 import {
   ColumnDef,
+  GroupingState,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import { useState } from 'react'
 
 interface iprops<T> {
   columns: ColumnDef<T, unknown>[]
@@ -12,11 +14,20 @@ interface iprops<T> {
 }
 
 const DataTable = <T,>({ columns, data, loading }: iprops<T>) => {
+  const [grouping, setGrouping] = useState<GroupingState>([])
+
   const dataTable = useReactTable({
     columns,
     data,
+    state: {
+      grouping,
+    },
+    onGroupingChange: setGrouping,
     getCoreRowModel: getCoreRowModel(),
   })
+
+  const totalColumns =
+    dataTable.getHeaderGroups()[dataTable.getHeaderGroups().length - 1]['headers'].length
 
   return (
     <table className="table table-bordered">
@@ -24,7 +35,10 @@ const DataTable = <T,>({ columns, data, loading }: iprops<T>) => {
         {dataTable.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
-              <th key={header.id}>
+              <th
+                key={header.id}
+                colSpan={header.colSpan}
+                className={`${header.colSpan > 1 && 'text-center'}`}>
                 {header.isPlaceholder
                   ? null
                   : flexRender(header.column.columnDef.header, header.getContext())}
@@ -40,9 +54,11 @@ const DataTable = <T,>({ columns, data, loading }: iprops<T>) => {
               <i className="fa fa-spi fa-spiner"></i>
             </td>
           </tr>
-        ) : data.length == 0 ? (
+        ) : !data ? (
           <tr>
-            <td colSpan={columns.length}>No hay datos para mostrar</td>
+            <td colSpan={totalColumns} className="text-center">
+              No hay datos para mostrar
+            </td>
           </tr>
         ) : (
           dataTable.getRowModel().rows.map((row) => (

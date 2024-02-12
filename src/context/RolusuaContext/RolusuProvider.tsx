@@ -5,7 +5,12 @@ import { irolusu } from '../../interfaces'
 
 const initialState = {
   rolusuState: {
-    rolusu: {} as irolusu,
+    rolusu: {
+      rolusu_rolusu: 0,
+      rolusu_descri: '',
+      rolusu_abrevi: '',
+      rolusu_estado: 'A',
+    },
     modalCreated: false,
     modalUpdated: false,
   },

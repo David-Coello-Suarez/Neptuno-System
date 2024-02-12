@@ -21,7 +21,7 @@ export const RolusuReducer = (state: RolusuState, action: Action) => {
         rolusuState: {
           ...state.rolusuState,
           rolusu: action.payload,
-          modalCreated: true,
+          modalUpdated: true,
         },
       }
 
