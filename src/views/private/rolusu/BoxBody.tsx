@@ -1,4 +1,5 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
+import { useDispatch } from 'react-redux'
 import { ColumnDef } from '@tanstack/react-table'
 import { useDebounced, useRolsus } from '../../../hooks'
 import { DataTable } from '../../../components'
@@ -8,9 +9,12 @@ import { ButtonDelete } from '.'
 import { irolusu } from '../../../interfaces'
 
 const BoxBody = () => {
+  const dispatch = useDispatch()
+
   const {
     editRolusu,
     rolusuState: { query, pagina },
+    setPaginacion,
   } = useRolsus()
 
   const debounceQuery = useDebounced(query)
@@ -63,6 +67,12 @@ const BoxBody = () => {
     ],
     [],
   )
+
+  useEffect(() => {
+    if (data?.paginacion) {
+      setPaginacion(data.paginacion)
+    }
+  }, [data?.paginacion, setPaginacion])
 
   return (
     <DataTable columns={columns} data={data?.rolusu as irolusu[]} loading={isLoading} />

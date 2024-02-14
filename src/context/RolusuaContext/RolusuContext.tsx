@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import { irolusu } from '../../interfaces'
+import { ipaginacion, irolusu } from '../../interfaces'
 
 type RolusuContextProps = {
   rolusuState: {
@@ -8,6 +8,7 @@ type RolusuContextProps = {
     modalUpdated: boolean
     query: string
     pagina: number
+    paginacion: ipaginacion
   }
   modalCreated: () => void
   modalUpdated: () => void
@@ -15,6 +16,7 @@ type RolusuContextProps = {
   setQuery: (payload: string) => void
   setPagina: (payload: number) => void
   editRolusu: (rolusu: irolusu) => void
+  setPaginacion: (paginacion: ipaginacion) => void
 }
 
 export const RolusuContext = createContext<RolusuContextProps>({} as RolusuContextProps)

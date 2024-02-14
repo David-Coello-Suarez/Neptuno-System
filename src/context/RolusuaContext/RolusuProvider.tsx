@@ -1,7 +1,7 @@
 import { useReducer } from 'react'
 import { RolusuReducer } from './rolusuReducer'
 import { RolusuContext } from './RolusuContext'
-import { irolusu } from '../../interfaces'
+import { ipaginacion, irolusu } from '../../interfaces'
 
 const initialState = {
   rolusu: {
@@ -14,6 +14,12 @@ const initialState = {
   pagina: 1,
   modalCreated: false,
   modalUpdated: false,
+  paginacion: {
+    pagina: 0,
+    limite: 0,
+    totalItems: 0,
+    totalPages: 0,
+  },
 }
 
 interface props {
@@ -35,10 +41,14 @@ export const RolusuProvider = ({ children }: props) => {
 
   const limpiarFormulario = () => dispatch({ type: 'LimpiarFormulario' })
 
+  const setPaginacion = (payload: ipaginacion) =>
+    dispatch({ type: 'SetPaginacion', payload })
+
   return (
     <RolusuContext.Provider
       value={{
         limpiarFormulario,
+        setPaginacion,
         modalCreated,
         modalUpdated,
         rolusuState,

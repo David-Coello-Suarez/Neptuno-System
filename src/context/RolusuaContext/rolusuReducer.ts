@@ -1,14 +1,16 @@
-import { irolusu } from '../../interfaces'
+import { ipaginacion, irolusu } from '../../interfaces'
 
 interface RolusuState {
-  rolusu: irolusu
+  paginacion: ipaginacion
   modalCreated: boolean
   modalUpdated: boolean
-  query: string
+  rolusu: irolusu
   pagina: number
+  query: string
 }
 
 type Action =
+  | { type: 'SetPaginacion'; payload: ipaginacion }
   | { type: 'EditRolusu'; payload: irolusu }
   | { type: 'SetPagina'; payload: number }
   | { type: 'Search'; payload: string }
@@ -17,6 +19,7 @@ type Action =
   | { type: 'ModalUpdated' }
 
 export const RolusuReducer = (state: RolusuState, action: Action) => {
+  console.log(action)
   switch (action.type) {
     case 'EditRolusu':
       return {
@@ -58,6 +61,12 @@ export const RolusuReducer = (state: RolusuState, action: Action) => {
           rolusu_abrevi: '',
           rolusu_estado: 'A',
         },
+      }
+
+    case 'SetPaginacion':
+      return {
+        ...state,
+        paginacion: action.payload,
       }
 
     default:

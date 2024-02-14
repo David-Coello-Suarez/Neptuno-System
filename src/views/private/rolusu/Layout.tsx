@@ -1,6 +1,8 @@
 import { BoxBody, BoxHeader, ModalCreated, ModalUpdated } from '.'
+import { useRolsus } from '../../../hooks'
 
 const Layout = () => {
+  const { rolusuState } = useRolsus()
   return (
     <>
       <ModalCreated />
@@ -15,7 +17,9 @@ const Layout = () => {
             <div className="box-body table-responsive">
               <BoxBody />
             </div>
-            <div className="box-footer clearfix"></div>
+            <div className="box-footer clearfix">
+              {JSON.stringify(rolusuState.paginacion, null, 2)}
+            </div>
           </div>
         </div>
       </div>
