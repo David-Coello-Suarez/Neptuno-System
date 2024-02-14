@@ -23,31 +23,25 @@ const UpdatedStatus = ({ rolusu }: iprops) => {
     }
   }
 
-  return rolusu.rolusu_estado == 'I' ? (
+  const changeStatus = rolusu.rolusu_estado == 'A'
+
+  return (
     <button
       type="button"
       onClick={handleClick}
       disabled={isLoading}
-      className="btn btn-sm btn-success">
+      className={`btn btn-sm btn-${changeStatus ? 'success' : 'warning'}`}>
       {isLoading ? (
         <i className="fa fa-spin fa-spinner" />
-      ) : (
-        <i className="fa fa-check"></i>
-      )}
-      <span style={{ marginLeft: '1rem' }}>Activo</span>
-    </button>
-  ) : (
-    <button
-      type="button"
-      onClick={handleClick}
-      disabled={isLoading}
-      className="btn btn-sm btn-warning">
-      {isLoading ? (
-        <i className="fa fa-spin fa-spinner" />
+      ) : changeStatus ? (
+        <i className="fa fa fa-check"></i>
       ) : (
         <i className="fa fa fa-close"></i>
       )}
-      <span style={{ marginLeft: '1rem' }}>Inactivo</span>
+      <span style={{ marginLeft: '.5rem' }}>
+        {' '}
+        {changeStatus ? 'Activo' : 'Inactivo'}{' '}
+      </span>
     </button>
   )
 }

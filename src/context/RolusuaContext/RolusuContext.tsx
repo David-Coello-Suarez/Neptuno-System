@@ -6,9 +6,14 @@ type RolusuContextProps = {
     rolusu: irolusu
     modalCreated: boolean
     modalUpdated: boolean
+    query: string
+    pagina: number
   }
   modalCreated: () => void
   modalUpdated: () => void
+  limpiarFormulario: () => void
+  setQuery: (payload: string) => void
+  setPagina: (payload: number) => void
   editRolusu: (rolusu: irolusu) => void
 }
 

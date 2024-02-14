@@ -1,3 +1,4 @@
 import DataTable from './DataTable'
+import SearchInput from './SearchInput'
 
-export { DataTable }
+export { DataTable, SearchInput }

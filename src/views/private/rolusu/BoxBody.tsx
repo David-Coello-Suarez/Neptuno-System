@@ -1,15 +1,21 @@
-import { ColumnDef } from '@tanstack/react-table'
-import { DataTable } from '../../../components'
-import { irolusu } from '../../../interfaces'
-import { useGetRoulusuQuery } from '../../../resources/rolusu'
 import { useMemo } from 'react'
-import { useRolsus } from '../../../hooks'
-import { ButtonDelete } from '.'
+import { ColumnDef } from '@tanstack/react-table'
+import { useDebounced, useRolsus } from '../../../hooks'
+import { DataTable } from '../../../components'
+import { useGetRoulusuQuery } from '../../../resources/rolusu'
 import UpdatedStatus from './UpdatedStatus'
+import { ButtonDelete } from '.'
+import { irolusu } from '../../../interfaces'
 
 const BoxBody = () => {
-  const { editRolusu } = useRolsus()
-  const { data, isLoading } = useGetRoulusuQuery({ pagina: 1, query: '' })
+  const {
+    editRolusu,
+    rolusuState: { query, pagina },
+  } = useRolsus()
+
+  const debounceQuery = useDebounced(query)
+
+  const { data, isLoading } = useGetRoulusuQuery({ pagina, query: debounceQuery })
 
   const columns = useMemo<ColumnDef<irolusu>[]>(
     () => [

@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { useRolsus } from '../../../hooks'
 import { Rolusu } from '../../../resources/rolusu'
+import { SearchQuery } from '.'
 
 const BoxHeader = () => {
   const dispatch = useDispatch()
@@ -28,7 +29,7 @@ const BoxHeader = () => {
           className="btn btn-sm btn-success margin-r-5">
           <i className="fa fa-plus"></i>
         </button>
-        <button
+        {/* <button
           type="button"
           className="btn btn-sm btn-success margin-r-5"
           title="Descargar Excel">
@@ -45,23 +46,10 @@ const BoxHeader = () => {
           className="btn btn-sm btn-success margin-r-5"
           title="Imprimir">
           <i className="fa fa-print"></i>
-        </button>
+        </button> */}
       </div>
       <div className="col-xs-12 col-md-3" style={{ marginBottom: '1rem' }}>
-        <div className="input-group-sm">
-          <input
-            type="text"
-            name="table_search"
-            className="form-control pull-right"
-            placeholder="Search"
-          />
-          {/* 
-          <div className="input-group-btn">
-            <button type="submit" className="btn btn-default">
-              <i className="fa fa-search"></i>
-            </button>
-          </div> */}
-        </div>
+        <SearchQuery />
       </div>
     </div>
   )

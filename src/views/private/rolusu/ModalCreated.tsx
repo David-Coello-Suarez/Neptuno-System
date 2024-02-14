@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 import { RolusuValidation } from '../../../validation'
 
 const ModalCreated = () => {
-  const { rolusuState, modalCreated } = useRolsus()
+  const { rolusuState, modalCreated, limpiarFormulario } = useRolsus()
 
   const [created, { isLoading }] = usePostRolusuMutation()
 
@@ -17,10 +17,15 @@ const ModalCreated = () => {
     if (response.estado === 1) {
       toast.success(response.mensaje)
       options.resetForm()
-      modalCreated()
+      setModal()
     } else {
       toast.warn(response.mensaje)
     }
+  }
+
+  const setModal = () => {
+    modalCreated()
+    limpiarFormulario()
   }
 
   return (
@@ -44,6 +49,7 @@ const ModalCreated = () => {
             <div className="form-group">
               <label htmlFor="rolusu_descri">Descripción</label>
               <Field
+                autoFocus
                 id="rolusu_descri"
                 name="rolusu_descri"
                 placeholder="Descripción"
@@ -66,7 +72,7 @@ const ModalCreated = () => {
             <button
               type="reset"
               disabled={isLoading}
-              onClick={modalCreated}
+              onClick={setModal}
               className="btn btn-default pull-left">
               Cerrar
             </button>
