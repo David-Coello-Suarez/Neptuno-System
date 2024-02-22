@@ -1,6 +1,8 @@
+import { lazy } from 'react'
 import { RouteObject } from 'react-router-dom'
-import RouterRolusu from './rolusu/RouterRolusu'
 
-const RouterPrivate: RouteObject[] = [{ path: 'rolusu', children: RouterRolusu }]
+const LayoutRolusu = lazy(() => import('./rolusu/Layout'))
+
+const RouterPrivate: RouteObject[] = [{ path: 'rolusu', element: <LayoutRolusu /> }]
 
 export default RouterPrivate

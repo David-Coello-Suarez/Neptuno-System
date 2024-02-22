@@ -1,55 +1,34 @@
 import { useDispatch } from 'react-redux'
-import { useRolsus } from '../../../hooks'
+import { Button, SearchInput } from '../../../components'
 import { Rolusu } from '../../../resources/rolusu'
-import { SearchQuery } from '.'
+import { useApp } from '../../../hooks'
 
 const BoxHeader = () => {
   const dispatch = useDispatch()
 
-  const { modalCreated } = useRolsus()
-
-  const handleClickUpdated = () => {
+  const handleClickInvalidate = () =>
     dispatch(Rolusu.util.invalidateTags([{ type: 'Rolusu', id: 'LIST' }]))
-  }
+
+  const { state, writeSearch } = useApp()
+
+  const { query } = state
 
   return (
     <div className="row">
-      <div className="col-xs-12 col-md-9" style={{ marginBottom: '1rem' }}>
-        <button
-          type="button"
-          title="Actualizar"
-          onClick={handleClickUpdated}
-          className="btn btn-sm btn-success margin-r-5">
-          <i className="fa fa-refresh"></i>
-        </button>
-        <button
-          type="button"
-          title="Añadir"
-          onClick={modalCreated}
-          className="btn btn-sm btn-success margin-r-5">
-          <i className="fa fa-plus"></i>
-        </button>
-        {/* <button
-          type="button"
-          className="btn btn-sm btn-success margin-r-5"
-          title="Descargar Excel">
-          <i className="fa fa-file-excel-o"></i>
-        </button>
-        <button
-          type="button"
-          className="btn btn-sm btn-success margin-r-5"
-          title="Descargar PDF">
-          <i className="fa fa-file-pdf-o"></i>
-        </button>
-        <button
-          type="button"
-          className="btn btn-sm btn-success margin-r-5"
-          title="Imprimir">
-          <i className="fa fa-print"></i>
-        </button> */}
+      <div className="col-xs-12 col-md-8">
+        <Button
+          icon={'fa-refresh'}
+          title={'ACTUALIZAR TABLA'}
+          handleClick={handleClickInvalidate}
+        />{' '}
+        <Button
+          icon={'fa-plus'}
+          title={'AGREGAR NUEVO ROL'}
+          handleClick={() => console.log('click')}
+        />
       </div>
-      <div className="col-xs-12 col-md-3" style={{ marginBottom: '1rem' }}>
-        <SearchQuery />
+      <div className="col-xs-12 col-md-4">
+        <SearchInput value={query} onChange={writeSearch} />
       </div>
     </div>
   )

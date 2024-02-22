@@ -1,29 +1,21 @@
-import { BoxBody, BoxHeader, ModalCreated, ModalUpdated } from '.'
-import { useRolsus } from '../../../hooks'
+import { Provider } from '../../../context/Rolusu'
+import { BoxHeader } from '.'
 
 const Layout = () => {
-  const { rolusuState } = useRolsus()
   return (
-    <>
-      <ModalCreated />
-      <ModalUpdated />
-
+    <Provider>
       <div className="row">
-        <div className="col-xs-12">
+        <div className="col-md-12">
           <div className="box">
-            <div className="box-header with-border">
+            <div className="box-header">
               <BoxHeader />
             </div>
-            <div className="box-body table-responsive">
-              <BoxBody />
-            </div>
-            <div className="box-footer clearfix">
-              {JSON.stringify(rolusuState.paginacion, null, 2)}
-            </div>
+            <div className="box-body"></div>
+            <div className="box-footer"></div>
           </div>
         </div>
       </div>
-    </>
+    </Provider>
   )
 }
 

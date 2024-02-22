@@ -1,8 +1,10 @@
 import { useContext } from 'react'
-import { RolusuContext } from '../context/RolusuaContext'
+import { Context } from '../context/Rolusu'
 
-export const useRolsus = () => {
-  const data = useContext(RolusuContext)
+const useRolusu = () => {
+  const hook = useContext(Context)
 
-  return { ...data }
+  return { ...hook }
 }
+
+export default useRolusu
