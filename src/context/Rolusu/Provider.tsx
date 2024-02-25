@@ -13,7 +13,11 @@ const Provider = ({ children }: iprops) => {
 
   const CleanForm = () => dispatch({ type: 'CleanForm' })
 
-  const value = { state, EditItem, CleanForm }
+  const clickModalCreated = () => dispatch({ type: 'openModalCreated' })
+
+  const clickModalUpdated = () => dispatch({ type: 'openModalUpdated' })
+
+  const value = { state, EditItem, CleanForm, clickModalCreated, clickModalUpdated }
 
   return <Context.Provider value={value}>{children}</Context.Provider>
 }

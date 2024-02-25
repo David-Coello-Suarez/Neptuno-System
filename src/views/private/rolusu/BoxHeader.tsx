@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { Button, SearchInput } from '../../../components'
 import { Rolusu } from '../../../resources/rolusu'
-import { useApp } from '../../../hooks'
+import { useApp, useRolusu } from '../../../hooks'
 
 const BoxHeader = () => {
   const dispatch = useDispatch()
@@ -11,20 +11,22 @@ const BoxHeader = () => {
 
   const { state, writeSearch } = useApp()
 
+  const { clickModalCreated } = useRolusu()
+
   const { query } = state
 
   return (
     <div className="row">
-      <div className="col-xs-12 col-md-8">
+      <div className="col-xs-12 col-md-8" style={{ marginBottom: '1rem' }}>
         <Button
           icon={'fa-refresh'}
           title={'ACTUALIZAR TABLA'}
           handleClick={handleClickInvalidate}
-        />{' '}
+        />
         <Button
           icon={'fa-plus'}
           title={'AGREGAR NUEVO ROL'}
-          handleClick={() => console.log('click')}
+          handleClick={clickModalCreated}
         />
       </div>
       <div className="col-xs-12 col-md-4">

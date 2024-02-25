@@ -1,5 +1,6 @@
 import { createContext } from 'react'
 import { InitialState } from '.'
+import { ipaginacion } from '../../interfaces'
 
 type AppContextProps = {
   state: {
@@ -10,9 +11,13 @@ type AppContextProps = {
       token_usuario: string
     }
     query: string
+    pagina: number
+    paginacion: ipaginacion
   }
   setUsuarioLoggued: (value: typeof InitialState) => void
+  setPaginacion: (pagina: ipaginacion) => void
   writeSearch: (value: string) => void
+  changePage: (page: number) => void
   clearUsuarioLoggued: () => void
 }
 

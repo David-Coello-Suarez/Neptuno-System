@@ -1,8 +1,9 @@
 import {
   ColumnDef,
-  GroupingState,
+  SortingState,
   flexRender,
   getCoreRowModel,
+  getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
 import { useState } from 'react'
@@ -14,65 +15,84 @@ interface iprops<T> {
 }
 
 const DataTable = <T,>({ columns, data, loading }: iprops<T>) => {
-  const [grouping, setGrouping] = useState<GroupingState>([])
+  const [sorting, setSorting] = useState<SortingState>([])
 
   const dataTable = useReactTable({
     columns,
     data,
-    state: {
-      grouping,
-    },
-    onGroupingChange: setGrouping,
+    state: { sorting },
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   })
 
   const totalColumns =
     dataTable.getHeaderGroups()[dataTable.getHeaderGroups().length - 1]['headers'].length
 
   return (
-    <table className="table table-bordered">
-      <thead>
-        {dataTable.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <th
-                key={header.id}
-                colSpan={header.colSpan}
-                className={`${header.colSpan > 1 && 'text-center'}`}>
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(header.column.columnDef.header, header.getContext())}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {loading ? (
-          <tr>
-            <td colSpan={columns.length}>
-              <i className="fa fa-spi fa-spiner"></i>
-            </td>
-          </tr>
-        ) : !data ? (
-          <tr>
-            <td colSpan={totalColumns} className="text-center">
-              No hay datos para mostrar
-            </td>
-          </tr>
-        ) : (
-          dataTable.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
+    <div className="table-responsive">
+      <table className="table table-bordered">
+        <thead>
+          {dataTable.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th
+                  title={headerGroup.headers.length > 2 ? 'Click para ordernar' : ''}
+                  key={header.id}
+                  colSpan={header.colSpan}
+                  onClick={header.column.getToggleSortingHandler()}
+                  className={`${header.colSpan > 1 && 'text-center'}`}
+                  style={{ width: header.getSize() }}>
+                  {flexRender(header.column.columnDef.header, header.getContext())}
+                  {{
+                    asc: (
+                      <span className="pull-right">
+                        <i className="fa fa-sort-amount-asc" />
+                      </span>
+                    ),
+                    desc: (
+                      <span className="pull-right">
+                        <i className="fa fa-sort-amount-desc" />
+                      </span>
+                    ),
+                  }[header.column.getIsSorted() as string] ??
+                    (headerGroup.headers.length > 2 && header.index > 1 && (
+                      <span className="pull-right">
+                        <i className="fa fa-sort" />
+                      </span>
+                    ))}
+                </th>
               ))}
             </tr>
-          ))
-        )}
-      </tbody>
-    </table>
+          ))}
+        </thead>
+        <tbody>
+          {loading ? (
+            <tr>
+              <td colSpan={columns.length}>
+                <i className="fa fa-spi fa-spiner"></i>
+              </td>
+            </tr>
+          ) : !data ? (
+            <tr>
+              <td colSpan={totalColumns} className="text-center">
+                No hay datos para mostrar
+              </td>
+            </tr>
+          ) : (
+            dataTable.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
   )
 }
 

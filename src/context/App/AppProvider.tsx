@@ -1,5 +1,6 @@
 import { useReducer } from 'react'
 import { AppContext, AppReducer, InitialState } from '.'
+import { ipaginacion } from '../../interfaces'
 
 interface ipayload {
   isLoggued: boolean
@@ -9,6 +10,8 @@ interface ipayload {
     token_usuario: string
   }
   query: string
+  pagina: number
+  paginacion: ipaginacion
 }
 
 interface iprops {
@@ -25,7 +28,20 @@ const AppProvider = ({ children }: iprops) => {
 
   const writeSearch = (payload: string) => dispatch({ type: 'writeSearch', payload })
 
-  const value = { state, setUsuarioLoggued, clearUsuarioLoggued, writeSearch }
+  const setPaginacion = (payload: ipaginacion) =>
+    dispatch({ type: 'setPaginacion', payload })
+
+  const changePage = (payload: number) => dispatch({ type: 'changePage', payload })
+
+
+  const value = {
+    state,
+    changePage,
+    writeSearch,
+    setPaginacion,
+    setUsuarioLoggued,
+    clearUsuarioLoggued,
+  }
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }

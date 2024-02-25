@@ -1,3 +1,5 @@
+import { ipaginacion } from '../../interfaces'
+
 interface initialState {
   isLoggued: boolean
   usuarioLoggued: {
@@ -6,12 +8,17 @@ interface initialState {
     token_usuario: string
   }
   query: string
+  pagina: number
+  paginacion: ipaginacion
 }
 
 type Action =
   | { type: 'setUsuarioLoggued'; payload: initialState }
+  | { type: 'setPaginacion'; payload: ipaginacion }
   | { type: 'writeSearch'; payload: string }
+  | { type: 'changePage'; payload: number }
   | { type: 'clearUsuarioLoggued' }
+  | { type: 'openModal' }
 
 const AppReducer = (state: initialState, action: Action): initialState => {
   switch (action.type) {
@@ -34,6 +41,18 @@ const AppReducer = (state: initialState, action: Action): initialState => {
       return {
         ...state,
         query: action.payload,
+      }
+
+    case 'changePage':
+      return {
+        ...state,
+        pagina: action.payload,
+      }
+
+    case 'setPaginacion':
+      return {
+        ...state,
+        paginacion: action.payload,
       }
 
     default:
